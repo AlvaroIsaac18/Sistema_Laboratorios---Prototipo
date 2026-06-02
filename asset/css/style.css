@@ -1,0 +1,147 @@
+:root {
+    --sidebar-width: 280px;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #f1f4f9;
+}
+
+#sidebar {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    transition: all 0.3s;
+    background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+    z-index: 1000;
+}
+
+#sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background-color: #025abb;
+    z-index: -1;
+}
+
+#sidebar.collapsed {
+    margin-left: calc(-1 * var(--sidebar-width));
+}
+
+.logo_UPTAEB {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo_UPTAEB img {
+    width: 50% !important;
+}
+
+.line-m {
+    border-bottom: 2px solid #025abb !important;
+}
+
+.sidebar-accordion .accordion-item {
+    background: transparent;
+    border: none;
+}
+
+.sidebar-accordion .accordion-button {
+    background: transparent;
+    color: #333;
+    padding: 12px 20px;
+    font-size: 1rem;
+    box-shadow: none;
+    border-radius: 0;
+    gap: 12px;
+    transition: all 0.2s;
+}
+
+.sidebar-accordion .accordion-button:hover {
+    color: #025abb;
+    background-color: rgba(2, 90, 187, 0.05);
+}
+
+.sidebar-accordion .accordion-button:not(.collapsed) {
+    background: #036ee3 !important;
+    color: #fff !important;
+}
+
+.sidebar-accordion .accordion-button:not(.collapsed)::after {
+    filter: invert(1) brightness(2);
+}
+
+.sidebar-accordion .accordion-body {
+    padding: 0 0 0 45px;
+}
+
+.sidebar-accordion .nav-link {
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.sidebar-accordion .nav-link:hover {
+    color: #025abb;
+}
+
+.content-area {
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.nav-link {
+    color: #333;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    color: #025abb;
+    background-color: rgba(2, 90, 187, 0.05);
+}
+
+.nav-link.active {
+    color: #025abb;
+    font-weight: 600;
+    background-color: rgba(2, 90, 187, 0.08);
+    border-left: 3px solid #025abb;
+}
+
+.card {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07) !important;
+}
+
+.top-navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+        position: fixed;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
