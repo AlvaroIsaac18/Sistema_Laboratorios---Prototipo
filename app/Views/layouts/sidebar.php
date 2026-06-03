@@ -101,27 +101,35 @@ function rutaPermitida($ruta) {
             </li>
             <?php endif; ?>
 
-            <?php if (rutaPermitida('inventarioGeneral') || rutaPermitida('nuevoInsumo') || rutaPermitida('movimientosInsumos') || rutaPermitida('alertasStock')): ?>
+            <?php if (rutaPermitida('inventarioGeneral') || rutaPermitida('nuevoInsumo') || rutaPermitida('movimientosInsumos') || rutaPermitida('alertasStock') || rutaPermitida('reportes') || rutaPermitida('generacionReportes')): ?>
             <li class="nav-item">
                 <div class="accordion sidebar-accordion" id="accordionInsumos">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingInsumos">
-                            <button class="accordion-button <?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'movimientosInsumos', 'alertasStock'])) ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseInsumos" aria-expanded="<?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'movimientosInsumos', 'alertasStock'])) ? 'true' : 'false'; ?>" aria-controls="collapseInsumos">
+                            <button class="accordion-button <?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'editarInsumo', 'movimientosInsumos', 'alertasStock', 'reportes', 'generacionReportes'])) ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseInsumos" aria-expanded="<?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'editarInsumo', 'movimientosInsumos', 'alertasStock', 'reportes', 'generacionReportes'])) ? 'true' : 'false'; ?>" aria-controls="collapseInsumos">
                                 <i class="bi bi-box-seam me-2"></i> Insumos
                             </button>
                         </h2>
-                        <div id="collapseInsumos" class="accordion-collapse collapse <?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'movimientosInsumos', 'alertasStock'])) ? 'show' : ''; ?>" aria-labelledby="headingInsumos"
+                        <div id="collapseInsumos" class="accordion-collapse collapse <?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'movimientosInsumos', 'alertasStock', 'reportes', 'generacionReportes'])) ? 'show' : ''; ?>" aria-labelledby="headingInsumos"
                             data-bs-parent="#accordionInsumos">
                             <div class="accordion-body p-0">
                                 <?php if (rutaPermitida('inventarioGeneral')): ?>
-                                <a href="index.php?route=inventarioGeneral" class="nav-link py-2 ps-5 small <?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo'])) ? 'active' : ''; ?>">Inventario General</a>
+                                <a href="index.php?route=inventarioGeneral" class="nav-link py-2 ps-5 small <?php echo (in_array($activeRoute, ['inventarioGeneral', 'nuevoInsumo', 'editarInsumo'])) ? 'active' : ''; ?>">Inventario General</a>
                                 <?php endif; ?>
                                 <?php if (rutaPermitida('movimientosInsumos')): ?>
                                 <a href="index.php?route=movimientosInsumos" class="nav-link py-2 ps-5 small <?php echo ($activeRoute === 'movimientosInsumos') ? 'active' : ''; ?>">Movimientos (Entradas/Salidas)</a>
                                 <?php endif; ?>
                                 <?php if (rutaPermitida('alertasStock')): ?>
                                 <a href="index.php?route=alertasStock" class="nav-link py-2 ps-5 small <?php echo ($activeRoute === 'alertasStock') ? 'active' : ''; ?>">Alertas de Stock</a>
+                                <?php endif; ?>
+                                <hr class="my-1 mx-3">
+                                <span class="d-block ps-5 py-1 small text-muted fw-semibold">Reportes</span>
+                                <?php if (rutaPermitida('reportes')): ?>
+                                <a href="index.php?route=reportes" class="nav-link py-2 ps-5 small <?php echo ($activeRoute === 'reportes') ? 'active' : ''; ?>"><i class="bi bi-bar-chart me-1"></i> Panel Estadístico</a>
+                                <?php endif; ?>
+                                <?php if (rutaPermitida('generacionReportes')): ?>
+                                <a href="index.php?route=generacionReportes" class="nav-link py-2 ps-5 small <?php echo ($activeRoute === 'generacionReportes') ? 'active' : ''; ?>"><i class="bi bi-file-earmark-bar-graph me-1"></i> Generación de Reportes</a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -151,31 +159,6 @@ function rutaPermitida($ruta) {
             </li>
             <?php endif; ?>
 
-            <?php if (rutaPermitida('reportes') || rutaPermitida('generacionReportes')): ?>
-            <li class="nav-item">
-                <div class="accordion sidebar-accordion" id="accordionReportes">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingReportes">
-                            <button class="accordion-button <?php echo (in_array($activeRoute, ['reportes', 'generacionReportes'])) ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseReportes" aria-expanded="<?php echo (in_array($activeRoute, ['reportes', 'generacionReportes'])) ? 'true' : 'false'; ?>" aria-controls="collapseReportes">
-                                <i class="bi bi-graph-up me-2"></i> Reportes
-                            </button>
-                        </h2>
-                        <div id="collapseReportes" class="accordion-collapse collapse <?php echo (in_array($activeRoute, ['reportes', 'generacionReportes'])) ? 'show' : ''; ?>" aria-labelledby="headingReportes"
-                            data-bs-parent="#accordionReportes">
-                            <div class="accordion-body p-0">
-                                <?php if (rutaPermitida('reportes')): ?>
-                                <a href="index.php?route=reportes" class="nav-link py-2 ps-5 small <?php echo ($activeRoute === 'reportes') ? 'active' : ''; ?>">Panel Estadístico</a>
-                                <?php endif; ?>
-                                <?php if (rutaPermitida('generacionReportes')): ?>
-                                <a href="index.php?route=generacionReportes" class="nav-link py-2 ps-5 small <?php echo ($activeRoute === 'generacionReportes') ? 'active' : ''; ?>">Generación de Reportes</a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <?php endif; ?>
         </ul>
         <button class="btn btn-outline-danger p-0 ms-3 mt-3">
             <a href="index.php?route=logout" class="nav-link">

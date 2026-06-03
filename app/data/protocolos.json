@@ -1,0 +1,50 @@
+[
+    {
+        "tipo": "card",
+        "icono": "bi-journal-medical",
+        "color": "primary",
+        "titulo": "Guía del Estudiante",
+        "subtitulo": "Aprobada en 2025",
+        "activo": true
+    },
+    {
+        "tipo": "card",
+        "icono": "bi-exclamation-triangle",
+        "color": "danger",
+        "titulo": "Desechos Tóxicos",
+        "subtitulo": "Regulación Nacional",
+        "activo": true
+    },
+    {
+        "tipo": "card",
+        "icono": "bi-shield-check",
+        "color": "success",
+        "titulo": "Primeros Auxilios",
+        "subtitulo": "Manual Médico",
+        "activo": true
+    },
+    {
+        "tipo": "download",
+        "icono": "bi-file-earmark-pdf",
+        "iconColor": "danger",
+        "titulo": "Normas de Bioseguridad en Laboratorios C-01",
+        "subtitulo": "Actualizado: Enero 2026 | PDF (2.4 MB)",
+        "activo": true
+    },
+    {
+        "tipo": "download",
+        "icono": "bi-file-earmark-pdf",
+        "iconColor": "danger",
+        "titulo": "Manual de Uso Correcto de Reactivos",
+        "subtitulo": "Actualizado: Septiembre 2025 | PDF (5.1 MB)",
+        "activo": true
+    },
+    {
+        "tipo": "download",
+        "icono": "bi-file-earmark-word",
+        "iconColor": "primary",
+        "titulo": "Acta de Compromiso de Responsabilidad (Modelo Estudiantil)",
+        "subtitulo": "Actualizado: Marzo 2026 | DOCX (540 KB)",
+        "activo": true
+    }
+]

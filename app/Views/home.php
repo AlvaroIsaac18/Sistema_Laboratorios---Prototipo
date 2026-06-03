@@ -26,8 +26,8 @@
                     </div>
                     <h6 class="text-muted small text-uppercase mb-0">Insumos Críticos</h6>
                 </div>
-                <h3 class="mb-1 text-danger">5 Items</h3>
-                <p class="mb-0 small text-muted">Reactivos por agotarse esta semana</p>
+                <h3 class="mb-1 text-danger"><?= $insumosCriticos ?> Items</h3>
+                <p class="mb-0 small text-muted">Insumos con stock por debajo del mínimo</p>
             </div>
         </div>
     </div>
@@ -96,20 +96,21 @@
             </div>
             <div class="card-body pt-0">
                 <div class="list-group list-group-flush">
+                    <?php if (empty($stockBajo)): ?>
+                    <div class="list-group-item border-0 px-0">
+                        <p class="mb-0 text-muted small text-center py-3">No hay alertas críticas de stock.</p>
+                    </div>
+                    <?php else: ?>
+                    <?php foreach ($stockBajo as $s): ?>
                     <div class="list-group-item border-0 px-0">
                         <div class="d-flex w-100 justify-content-between align-items-center">
-                            <h6 class="mb-1 fw-bold text-dark">Choque de Horario</h6>
-                            <span class="badge bg-danger">Hoy</span>
+                            <h6 class="mb-1 fw-bold text-dark"><?= htmlspecialchars($s['nomInsumos']) ?></h6>
+                            <span class="badge bg-danger">Agotado</span>
                         </div>
-                        <p class="mb-1 text-muted small">Lab. de PNF en Higiene ocupado por Prof. Martínez (14:00 - 16:00).</p>
+                        <p class="mb-1 text-muted small">Stock disponible: <?= htmlspecialchars($s['cantidadDispInsumos'] ?? '0') ?> <?= htmlspecialchars($s['unidadMedidaInsumos'] ?? '') ?>.</p>
                     </div>
-                    <div class="list-group-item border-0 px-0">
-                        <div class="d-flex w-100 justify-content-between align-items-center">
-                            <h6 class="mb-1 fw-bold text-dark">Stock Bajo</h6>
-                            <span class="badge bg-warning text-dark">Alerta</span>
-                        </div>
-                        <p class="mb-1 text-muted small">Ácido Clorhídrico disponible solo 500ml.</p>
-                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

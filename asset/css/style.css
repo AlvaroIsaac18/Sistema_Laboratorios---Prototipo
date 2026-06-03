@@ -12,10 +12,14 @@ body {
     top: 0;
     left: 0;
     width: var(--sidebar-width);
-    min-height: 100vh;
+    min-width: 0;
+    flex: 0 0 var(--sidebar-width);
+    height: 100vh;
     transition: all 0.3s;
     background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
     z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #sidebar::before {
@@ -30,7 +34,9 @@ body {
 }
 
 #sidebar.collapsed {
-    margin-left: calc(-1 * var(--sidebar-width));
+    flex-basis: 0;
+    width: 0;
+    padding: 0;
 }
 
 .logo_UPTAEB {
@@ -93,7 +99,8 @@ body {
 }
 
 .content-area {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     transition: all 0.3s;
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2026 a las 17:22:47
+-- Tiempo de generación: 03-06-2026 a las 06:07:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,6 +51,7 @@ CREATE TABLE `tbldocente` (
   `nomDocente` varchar(45) NOT NULL,
   `apellidoDocente` varchar(45) NOT NULL,
   `correoInstitucionalDocente` varchar(45) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
   `idSolicitudPractica` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -58,8 +59,8 @@ CREATE TABLE `tbldocente` (
 -- Volcado de datos para la tabla `tbldocente`
 --
 
-INSERT INTO `tbldocente` (`idDocente`, `cedulaDocente`, `nomDocente`, `apellidoDocente`, `correoInstitucionalDocente`, `idSolicitudPractica`) VALUES
-(1, 'V-12345678', 'Pedro', 'Pérez', 'pperez@uptaeb.edu.ve', 1);
+INSERT INTO `tbldocente` (`idDocente`, `cedulaDocente`, `nomDocente`, `apellidoDocente`, `correoInstitucionalDocente`, `activo`, `idSolicitudPractica`) VALUES
+(1, 'V-12345678', 'Pedro', 'Pérez', 'pperez@uptaeb.edu.ve', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -116,15 +117,17 @@ CREATE TABLE `tblpersonaldireccion` (
   `idPersonalDireccion` int(11) NOT NULL,
   `nomPersonalDireccion` varchar(45) NOT NULL,
   `cargoPersonalDireccion` varchar(45) NOT NULL,
-  `cedulaPersonalDireccion` varchar(45) NOT NULL
+  `cedulaPersonalDireccion` varchar(45) NOT NULL,
+  `correoInstitucionalPersonalDireccion` varchar(45) DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `tblpersonaldireccion`
 --
 
-INSERT INTO `tblpersonaldireccion` (`idPersonalDireccion`, `nomPersonalDireccion`, `cargoPersonalDireccion`, `cedulaPersonalDireccion`) VALUES
-(1, 'María Rodríguez', 'Dirección de Recursos para la Formación', 'V-11223344');
+INSERT INTO `tblpersonaldireccion` (`idPersonalDireccion`, `nomPersonalDireccion`, `cargoPersonalDireccion`, `cedulaPersonalDireccion`, `correoInstitucionalPersonalDireccion`, `activo`) VALUES
+(1, 'María Rodríguez', 'Dirección de Recursos para la Formación', 'V-11223344', 'mariaRodri@uptaeb.edu.ve', 1);
 
 -- --------------------------------------------------------
 
@@ -198,6 +201,8 @@ CREATE TABLE `tblsolicitudpractica` (
 CREATE TABLE `tbltecnico` (
   `idTecnico` int(11) NOT NULL,
   `cedulaTecnico` varchar(45) NOT NULL,
+  `correoInstitucionalTecnico` varchar(45) DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
   `nomTecnico` varchar(45) NOT NULL,
   `direccionTecnico` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -206,8 +211,8 @@ CREATE TABLE `tbltecnico` (
 -- Volcado de datos para la tabla `tbltecnico`
 --
 
-INSERT INTO `tbltecnico` (`idTecnico`, `cedulaTecnico`, `nomTecnico`, `direccionTecnico`) VALUES
-(1, 'V-87654321', 'Carlos Mendoza', 'Laboratorio de Informática e Instrumentación');
+INSERT INTO `tbltecnico` (`idTecnico`, `cedulaTecnico`, `correoInstitucionalTecnico`, `activo`, `nomTecnico`, `direccionTecnico`) VALUES
+(1, 'V-87654321', NULL, 0, 'Carlos Mendoza', 'Laboratorio de Informática e Instrumentación');
 
 -- --------------------------------------------------------
 

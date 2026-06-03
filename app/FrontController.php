@@ -44,6 +44,9 @@ switch ($route) {
     case 'nuevoInsumo':
         include 'app/Controllers/NuevoInsumoController.php';
         break;
+    case 'editarInsumo':
+        include 'app/Controllers/EditarInsumoController.php';
+        break;
     case 'home':
         include 'app/Controllers/HomeController.php';
         break;
