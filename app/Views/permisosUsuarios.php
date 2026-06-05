@@ -3,7 +3,7 @@
         <h2 class="h4 mb-1">Roles y Permisos</h2>
         <p class="text-muted small mb-0">Configure los m&oacute;dulos a los que puede acceder cada rol</p>
     </div>
-    <a href="index.php?route=gestionUsuarios" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+    <a href="index.php?url=Usuario&type=list" class="btn btn-outline-secondary d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i>
         <span>Volver a Usuarios</span>
     </a>
@@ -31,7 +31,7 @@
     </div>
 <?php endif; ?>
 
-<form action="index.php?route=permisosUsuarios" method="POST">
+<form action="index.php?url=Usuario&type=permisos" method="POST">
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
             <thead class="table-dark">
@@ -40,7 +40,7 @@
                     <?php foreach ($roles as $rol): ?>
                     <th class="text-center">
                         <?php
-                        $iconos = ['Administrador' => 'bi-shield-check', 'Auxiliar' => 'bi-tools', 'Docente' => 'bi-journal-bookmark'];
+                        $iconos = ['Administrador' => 'bi-shield-check', 'Tecnico' => 'bi-tools', 'Docente' => 'bi-journal-bookmark'];
                         $icono = $iconos[$rol] ?? 'bi-person';
                         ?>
                         <i class="bi <?= $icono ?> me-1"></i>
@@ -50,28 +50,18 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($todasLasRutas as $ruta => $etiqueta): 
+                <?php foreach ($todasLasRutas as $ruta => $etiqueta):
                     $iconosRuta = [
-                        'home' => 'house-door',
-                        'perfil' => 'person',
-                        'gestionUsuarios' => 'people',
-                        'crearUsuario' => 'person-plus',
-                        'editarUsuario' => 'pencil-square',
-                        'eliminarUsuario' => 'person-x',
-                        'solicitudes' => 'file-earmark-text',
-                        'nuevaSolicitud' => 'file-earmark-plus',
-                        'historialSolicitudes' => 'clock-history',
-                        'laboratorios' => 'journal-text',
-                        'mantenimientoLabs' => 'wrench',
-                        'protocolosLabs' => 'shield-exclamation',
-                        'inventarioGeneral' => 'box-seam',
-                        'nuevoInsumo' => 'box',
-                        'movimientosInsumos' => 'arrow-left-right',
-                        'alertasStock' => 'exclamation-triangle',
-                        'horarios' => 'calendar3',
-                        'reportes' => 'graph-up',
-                        'generacionReportes' => 'file-earmark-bar-graph',
-                        'permisosUsuarios' => 'shield-lock',
+                        'home'          => 'house-door',
+                        'perfil'        => 'person',
+                        'usuario'       => 'people',
+                        'solicitud'     => 'file-earmark-text',
+                        'laboratorio'   => 'journal-text',
+                        'mantenimiento' => 'wrench',
+
+                        'insumo'        => 'box-seam',
+                        'reporte'       => 'graph-up',
+                        'reserva'       => 'calendar-check',
                     ];
                     $iconoRuta = $iconosRuta[$ruta] ?? 'circle';
                 ?>

@@ -3,7 +3,7 @@
         <h2 class="h4 mb-1">Editar Usuario</h2>
         <p class="text-muted small mb-0">Modifique los datos del usuario seleccionado</p>
     </div>
-    <a href="index.php?route=gestionUsuarios" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+    <a href="index.php?url=Usuario&type=list" class="btn btn-outline-secondary d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i>
         <span>Volver a Usuarios</span>
     </a>
@@ -33,7 +33,7 @@
 
 <div class="card border-0 shadow-sm">
     <div class="card-body p-4 p-md-5">
-        <form action="index.php?route=editarUsuario" method="POST">
+        <form action="index.php?url=Usuario&type=edit" method="POST">
             <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
             <input type="hidden" name="rol" value="<?= htmlspecialchars($usuario['rol']) ?>">
 
@@ -61,7 +61,7 @@
                     <label class="form-label fw-semibold text-secondary">Correo Institucional</label>
                     <input type="email" name="correo" class="form-control form-control-lg bg-light" value="<?= htmlspecialchars($usuario['correo'] ?? '') ?>">
                 </div>
-                <?php elseif ($usuario['rol'] === 'Auxiliar'): ?>
+                <?php elseif ($usuario['rol'] === 'Tecnico'): ?>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold text-secondary">Direcci&oacute;n / Departamento</label>
                     <input type="text" name="direccion" class="form-control form-control-lg bg-light" value="<?= htmlspecialchars($usuario['direccion'] ?? '') ?>">
@@ -75,7 +75,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-3 pt-3 border-top">
-                <a href="index.php?route=gestionUsuarios" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
+                <a href="index.php?url=Usuario&type=list" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
                 <button type="submit" class="btn btn-warning px-5 py-2 fw-semibold shadow-sm">
                     <i class="bi bi-save me-2"></i> Actualizar Usuario
                 </button>

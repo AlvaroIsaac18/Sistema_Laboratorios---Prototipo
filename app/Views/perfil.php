@@ -12,7 +12,7 @@ if (isset($_SESSION['success_message'])) {
             <h2 class="h4 mb-1">Perfil de Usuario</h2>
             <p class="text-muted small mb-0">Gestiona tu información de cuenta institucional</p>
         </div>
-        <a href="index.php?route=home" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+        <a href="index.php?url=Home" class="btn btn-outline-secondary d-flex align-items-center gap-2">
             <i class="bi bi-arrow-left"></i>
             <span>Volver al Inicio</span>
         </a>
@@ -88,7 +88,7 @@ if (isset($_SESSION['success_message'])) {
                 <div class="card-body p-4">
                     <p class="text-muted small mb-4">Datos personales y de contacto institucional registrados en el sistema de gestión de laboratorios.</p>
 
-                    <form action="index.php?route=perfil" method="POST">
+                    <form action="index.php?url=Usuario&type=perfil" method="POST">
                         <input type="hidden" name="update_profile" value="1">
                         <div class="row g-3">
                             <div class="col-md-6">

@@ -1,39 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Laboratorios\Models;
 
-use App\config\database\DbConnect;
+use App\Laboratorios\Config\Connect\ConnectDB;
 use PDO;
 
-class GestionUsuariosModel extends DbConnect {
-    public function getAll() {
+class GestionUsuariosModel extends ConnectDB {
+    public function getAll($soloActivos = true) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
+            $cond = $soloActivos ? '1' : '0';
 
             $sql = "
-                SELECT 
-                    `idDocente` AS `id`,
-                    `cedulaDocente` AS `cedula`,
-                    CONCAT(`nomDocente`, ' ', `apellidoDocente`) AS `nombre_completo`,
-                    LOWER(CONCAT(SUBSTRING(`nomDocente`, 1, 1), `apellidoDocente`)) AS `usuario`,
-                    `correoInstitucionalDocente` AS `correo`,
-                    'Docente' AS `rol`,
-                    'Dpto. Académico' AS `departamento`
-                FROM `tbldocente`
-                WHERE `activo` = 1
-                
-                UNION ALL
-                
                 SELECT 
                     `idTecnico` AS `id`,
                     `cedulaTecnico` AS `cedula`,
                     `nomTecnico` AS `nombre_completo`,
                     LOWER(REPLACE(`nomTecnico`, ' ', '')) AS `usuario`,
                     CONCAT(LOWER(REPLACE(`nomTecnico`, ' ', '')), '@uptaeb.edu.ve') AS `correo`,
-                    'Auxiliar' AS `rol`,
+                    'Tecnico' AS `rol`,
                     `direccionTecnico` AS `departamento`
                 FROM `tbltecnico`
-                WHERE `activo` = 1
+                WHERE `activo` = $cond
                 
                 UNION ALL
                 
@@ -46,12 +34,25 @@ class GestionUsuariosModel extends DbConnect {
                     'Administrador' AS `rol`,
                     `cargoPersonalDireccion` AS `departamento`
                 FROM `tblpersonaldireccion`
-                WHERE `activo` = 1
+                WHERE `activo` = $cond
+                
+                UNION ALL
+                
+                SELECT 
+                    `idDocente` AS `id`,
+                    `cedulaDocente` AS `cedula`,
+                    CONCAT(`nomDocente`, ' ', `apellidoDocente`) AS `nombre_completo`,
+                    LOWER(REPLACE(`nomDocente`, ' ', '')) AS `usuario`,
+                    `correoInstitucionalDocente` AS `correo`,
+                    'Docente' AS `rol`,
+                    '' AS `departamento`
+                FROM `tbldocente`
+                WHERE `activo` = $cond
                 
                 ORDER BY `nombre_completo` ASC
             ";
 
-            $response = $this->con->prepare($sql);
+            $response = $conex->prepare($sql);
             $response->execute();
 
             return $response->fetchAll(PDO::FETCH_ASSOC);
@@ -62,28 +63,28 @@ class GestionUsuariosModel extends DbConnect {
 
     public function create($data) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
             $rol = $data['rol'];
 
             if ($rol === 'Docente') {
-                $sql = "INSERT INTO `tbldocente` (`cedulaDocente`, `nomDocente`, `apellidoDocente`, `correoInstitucionalDocente`, `idSolicitudPractica`) 
-                        VALUES (:cedula, :nombre, :apellido, :correo, 1)";
-                $stmt = $this->con->prepare($sql);
+                $sql = "INSERT INTO `tbldocente` (`cedulaDocente`, `nomDocente`, `apellidoDocente`, `correoInstitucionalDocente`) 
+                        VALUES (:cedula, :nombre, :apellido, :correo)";
+                $stmt = $conex->prepare($sql);
                 $stmt->bindValue(':cedula', $data['cedula']);
                 $stmt->bindValue(':nombre', $data['nombre']);
                 $stmt->bindValue(':apellido', $data['apellido']);
                 $stmt->bindValue(':correo', $data['correo']);
-            } elseif ($rol === 'Auxiliar') {
+            } elseif ($rol === 'Tecnico') {
                 $sql = "INSERT INTO `tbltecnico` (`cedulaTecnico`, `nomTecnico`, `direccionTecnico`) 
                         VALUES (:cedula, :nombre, :direccion)";
-                $stmt = $this->con->prepare($sql);
+                $stmt = $conex->prepare($sql);
                 $stmt->bindValue(':cedula', $data['cedula']);
                 $stmt->bindValue(':nombre', $data['nombre']);
                 $stmt->bindValue(':direccion', $data['direccion'] ?? '');
             } else {
                 $sql = "INSERT INTO `tblpersonaldireccion` (`cedulaPersonalDireccion`, `nomPersonalDireccion`, `cargoPersonalDireccion`) 
                         VALUES (:cedula, :nombre, :cargo)";
-                $stmt = $this->con->prepare($sql);
+                $stmt = $conex->prepare($sql);
                 $stmt->bindValue(':cedula', $data['cedula']);
                 $stmt->bindValue(':nombre', $data['nombre']);
                 $stmt->bindValue(':cargo', $data['cargo'] ?? '');
@@ -91,13 +92,32 @@ class GestionUsuariosModel extends DbConnect {
 
             return $stmt->execute();
         } catch(\PDOException $e) {
-            die("Error al crear usuario: " . $e->getMessage());
+            error_log("Error en GestionUsuariosModel::create: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getByCedula($cedula, $rol) {
+        try {
+            $conex = $this->getConnection();
+            if ($rol === 'Docente') {
+                $sql = "SELECT `idDocente` FROM `tbldocente` WHERE `cedulaDocente` = :cedula";
+            } elseif ($rol === 'Tecnico') {
+                $sql = "SELECT `idTecnico` FROM `tbltecnico` WHERE `cedulaTecnico` = :cedula";
+            } else {
+                $sql = "SELECT `idPersonalDireccion` FROM `tblpersonaldireccion` WHERE `cedulaPersonalDireccion` = :cedula";
+            }
+            $stmt = $conex->prepare($sql);
+            $stmt->execute([':cedula' => $cedula]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch(\PDOException $e) {
+            return false;
         }
     }
 
     public function update($id, $rol, $data) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
 
             if ($rol === 'Docente') {
                 $sql = "UPDATE `tbldocente` SET 
@@ -106,19 +126,19 @@ class GestionUsuariosModel extends DbConnect {
                             `apellidoDocente` = :apellido,
                             `correoInstitucionalDocente` = :correo
                         WHERE `idDocente` = :id";
-                $stmt = $this->con->prepare($sql);
+                $stmt = $conex->prepare($sql);
                 $stmt->bindValue(':cedula', $data['cedula']);
                 $stmt->bindValue(':nombre', $data['nombre']);
                 $stmt->bindValue(':apellido', $data['apellido']);
                 $stmt->bindValue(':correo', $data['correo']);
                 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            } elseif ($rol === 'Auxiliar') {
+            } elseif ($rol === 'Tecnico') {
                 $sql = "UPDATE `tbltecnico` SET 
                             `cedulaTecnico` = :cedula,
                             `nomTecnico` = :nombre,
                             `direccionTecnico` = :direccion
                         WHERE `idTecnico` = :id";
-                $stmt = $this->con->prepare($sql);
+                $stmt = $conex->prepare($sql);
                 $stmt->bindValue(':cedula', $data['cedula']);
                 $stmt->bindValue(':nombre', $data['nombre']);
                 $stmt->bindValue(':direccion', $data['direccion'] ?? '');
@@ -129,7 +149,7 @@ class GestionUsuariosModel extends DbConnect {
                             `nomPersonalDireccion` = :nombre,
                             `cargoPersonalDireccion` = :cargo
                         WHERE `idPersonalDireccion` = :id";
-                $stmt = $this->con->prepare($sql);
+                $stmt = $conex->prepare($sql);
                 $stmt->bindValue(':cedula', $data['cedula']);
                 $stmt->bindValue(':nombre', $data['nombre']);
                 $stmt->bindValue(':cargo', $data['cargo'] ?? '');
@@ -144,17 +164,17 @@ class GestionUsuariosModel extends DbConnect {
 
     public function softDelete($id, $rol) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
 
             if ($rol === 'Docente') {
                 $sql = "UPDATE `tbldocente` SET `activo` = 0 WHERE `idDocente` = :id";
-            } elseif ($rol === 'Auxiliar') {
+            } elseif ($rol === 'Tecnico') {
                 $sql = "UPDATE `tbltecnico` SET `activo` = 0 WHERE `idTecnico` = :id";
             } else {
                 $sql = "UPDATE `tblpersonaldireccion` SET `activo` = 0 WHERE `idPersonalDireccion` = :id";
             }
 
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch(\PDOException $e) {
@@ -164,25 +184,49 @@ class GestionUsuariosModel extends DbConnect {
 
     public function getById($id, $rol) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
 
             if ($rol === 'Docente') {
                 $sql = "SELECT `idDocente` AS `id`, `cedulaDocente` AS `cedula`, `nomDocente` AS `nombre`, `apellidoDocente` AS `apellido`, `correoInstitucionalDocente` AS `correo`, 'Docente' AS `rol`
                         FROM `tbldocente` WHERE `idDocente` = :id";
-            } elseif ($rol === 'Auxiliar') {
-                $sql = "SELECT `idTecnico` AS `id`, `cedulaTecnico` AS `cedula`, `nomTecnico` AS `nombre`, '' AS `apellido`, '' AS `correo`, 'Auxiliar' AS `rol`, `direccionTecnico` AS `direccion`
+            } elseif ($rol === 'Tecnico') {
+                $sql = "SELECT `idTecnico` AS `id`, `cedulaTecnico` AS `cedula`, `nomTecnico` AS `nombre`, '' AS `apellido`, '' AS `correo`, 'Tecnico' AS `rol`, `direccionTecnico` AS `direccion`
                         FROM `tbltecnico` WHERE `idTecnico` = :id";
             } else {
                 $sql = "SELECT `idPersonalDireccion` AS `id`, `cedulaPersonalDireccion` AS `cedula`, `nomPersonalDireccion` AS `nombre`, '' AS `apellido`, '' AS `correo`, 'Administrador' AS `rol`, `cargoPersonalDireccion` AS `cargo`
                         FROM `tblpersonaldireccion` WHERE `idPersonalDireccion` = :id";
             }
 
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch(\PDOException $e) {
             die("Error al obtener usuario: " . $e->getMessage());
+        }
+    }
+
+    public function getDocentes() {
+        try {
+            $conex = $this->getConnection();
+            $sql = "SELECT idDocente, CONCAT(nomDocente, ' ', apellidoDocente) as nombre FROM tbldocente WHERE activo = 1 ORDER BY nomDocente ASC";
+            $stmt = $conex->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(\PDOException $e) {
+            return [];
+        }
+    }
+
+    public function getDocenteCount() {
+        try {
+            $conex = $this->getConnection();
+            $sql = "SELECT COUNT(*) as total FROM tbldocente WHERE activo = 1";
+            $stmt = $conex->prepare($sql);
+            $stmt->execute();
+            return (int)$stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        } catch(\PDOException $e) {
+            return 0;
         }
     }
 }

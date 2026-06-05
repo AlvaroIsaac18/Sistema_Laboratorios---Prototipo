@@ -1,18 +1,34 @@
 <?php
-namespace App\Controllers;
+namespace App\Laboratorios\Controllers;
 
-require_once 'app/Models/InsumosModel.php';
-use App\Models\InsumosModel;
+use App\Laboratorios\Models\InsumosModel;
+use App\Laboratorios\Models\GestionUsuariosModel;
+use App\Laboratorios\Models\SolicitudesModel;
+use App\Laboratorios\Models\ReservasModel;
+use App\Laboratorios\Models\LaboratoriosModel;
 
-$model = new InsumosModel();
-$insumos = $model->getAll();
+$insumoModel      = new InsumosModel();
+$userModel        = new GestionUsuariosModel();
+$solicitudModel   = new SolicitudesModel();
+$reservaModel     = new ReservasModel();
+$laboratorioModel = new LaboratoriosModel();
+
+$insumos          = $insumoModel->getAll();
+$docenteCount     = $userModel->getDocenteCount();
+$solicitudesPend  = $solicitudModel->getPendientesCount();
+$reservasHoy      = $reservaModel->getHoyCount();
+$proximasClases   = $reservaModel->getProximas(15);
+
+$labResumen   = $laboratorioModel->getResumen();
+$totalUsers   = count($userModel->getAll());
+$totalInsumos = count($insumos);
 
 $insumosCriticos = 0;
 $stockBajo = [];
 
 foreach ($insumos as $insumo) {
     $disp = (float)($insumo['cantidadDispInsumos'] ?? 0);
-    $min = (float)($insumo['cantidadMinInsumos'] ?? 0);
+    $min  = (float)($insumo['cantidadMinInsumos'] ?? 0);
     if ($disp <= $min) {
         $insumosCriticos++;
     }
@@ -21,7 +37,7 @@ foreach ($insumos as $insumo) {
     }
 }
 
-$pageTitle = "Inicio - Dirección de Formación";
+$pageTitle   = "Inicio - Dirección de Formación";
 $activeRoute = "home";
-$viewPath = "app/Views/home.php";
+$viewPath    = "app/Views/home.php";
 include "app/Views/layouts/main.php";

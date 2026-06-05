@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="h4 mb-1">Gesti&oacute;n de Usuarios</h2>
-        <p class="text-muted small mb-0">Administraci&oacute;n de docentes, auxiliares y roles de la plataforma</p>
+        <p class="text-muted small mb-0">Administración de docentes, técnicos y roles de la plataforma</p>
     </div>
-    <a href="index.php?route=crearUsuario" class="btn btn-primary d-flex align-items-center gap-2">
+    <a href="index.php?url=Usuario&type=register" class="btn btn-primary d-flex align-items-center gap-2">
         <i class="bi bi-plus-lg"></i>
         <span>Registrar Nuevo Usuario</span>
     </a>
@@ -22,9 +22,22 @@
 
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
-        <h5 class="card-title fw-bold mb-0">Listado de Usuarios Registrados</h5>
-        <form action="index.php?route=gestionUsuarios" method="GET" class="d-flex gap-2" style="max-width: 300px;">
-            <input type="hidden" name="route" value="gestionUsuarios">
+        <h5 class="card-title fw-bold mb-0">
+            <?php if (isset($_GET['inactivos']) && $_GET['inactivos'] === '1'): ?>
+                Usuarios Inactivos
+                <a href="index.php?url=Usuario&type=list" class="badge bg-secondary bg-opacity-10 text-secondary text-decoration-none ms-2 small fw-normal">
+                    <i class="bi bi-people me-1"></i>Ver activos
+                </a>
+            <?php else: ?>
+                Listado de Usuarios Registrados
+                <a href="index.php?url=Usuario&type=list&inactivos=1" class="badge bg-secondary bg-opacity-10 text-secondary text-decoration-none ms-2 small fw-normal">
+                    <i class="bi bi-person-slash me-1"></i>Ver inactivos
+                </a>
+            <?php endif; ?>
+        </h5>
+        <form action="index.php?url=Usuario&type=list" method="GET" class="d-flex gap-2" style="max-width: 300px;">
+            <input type="hidden" name="url" value="Usuario">
+            <input type="hidden" name="type" value="list">
             <div class="input-group">
                 <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
                 <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Buscar usuario..." value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
@@ -51,7 +64,7 @@
                         $avatarColor = 'bg-primary text-primary';
                         $rolIcon = 'bi-journal-bookmark text-primary';
                         
-                        if ($user['rol'] === 'Auxiliar') {
+                        if ($user['rol'] === 'Tecnico') {
                             $avatarColor = 'bg-success text-success';
                             $rolIcon = 'bi-tools text-success';
                         } elseif ($user['rol'] === 'Administrador') {
@@ -59,7 +72,8 @@
                             $rolIcon = 'bi-shield-check text-warning';
                         }
                     ?>
-                        <tr>
+                        <?php $esInactivo = isset($_GET['inactivos']) && $_GET['inactivos'] === '1'; ?>
+                        <tr class="<?= $esInactivo ? 'opacity-50' : '' ?>">
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="<?= $avatarColor ?> bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 40px; height: 40px;">
@@ -84,12 +98,14 @@
                                 <span class="text-muted small"><?= htmlspecialchars($user['cedula']) ?></span>
                             </td>
                             <td class="text-end">
-                                <a href="index.php?route=editarUsuario&id=<?= $user['id'] ?>&rol=<?= $user['rol'] ?>" class="btn btn-sm btn-outline-primary" title="Editar">
+                                <a href="index.php?url=Usuario&type=edit&id=<?= $user['id'] ?>&rol=<?= $user['rol'] ?>" class="btn btn-sm btn-outline-primary" title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <a href="index.php?route=eliminarUsuario&id=<?= $user['id'] ?>&rol=<?= $user['rol'] ?>" class="btn btn-sm btn-outline-danger" title="Desactivar">
+                                <?php if (!$esInactivo): ?>
+                                <a href="index.php?url=Usuario&type=delete&id=<?= $user['id'] ?>&rol=<?= $user['rol'] ?>" class="btn btn-sm btn-outline-danger" title="Desactivar" onclick="return confirm('¿Desactivar a <?= htmlspecialchars($user['nombre_completo'], ENT_QUOTES) ?>? Se marcará como inactivo y no aparecerá en el listado.');">
                                     <i class="bi bi-slash-circle"></i>
                                 </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

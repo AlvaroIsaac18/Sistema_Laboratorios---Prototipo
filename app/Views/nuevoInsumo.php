@@ -3,7 +3,7 @@
         <h2 class="h4 mb-1">Registrar Nuevo Insumo</h2>
         <p class="text-muted small mb-0">Carga de nuevos materiales, reactivos y equipos al inventario general</p>
     </div>
-    <a href="index.php?route=inventarioGeneral" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+    <a href="index.php?url=Insumo" class="btn btn-outline-secondary d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i>
         <span>Volver a Inventario</span>
     </a>
@@ -18,7 +18,7 @@
 </div>
 <?php endif; ?>
 
-        <form action="index.php?route=nuevoInsumo" method="POST">
+        <form action="index.php?url=Insumo&type=register" method="POST">
             <h5 class="fw-bold mb-4 text-primary border-bottom pb-2">Información Básica</h5>
             <div class="row g-4 mb-5">
                 <div class="col-md-6">
@@ -81,7 +81,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-3 pt-3 border-top">
-                <a href="index.php?route=inventarioGeneral" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
+                <a href="index.php?url=Insumo" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
                 <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold shadow-sm d-flex justify-content-center align-items-center"><i class="bi bi-box-seam me-2"></i> Registrar e Ingresar a Stock</button>
             </div>
         </form>

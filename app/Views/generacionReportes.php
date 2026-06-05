@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="h4 mb-0">Generador de Reportes Especializados</h2>
-    <a href="index.php?route=reportes" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+    <a href="index.php?url=Reporte&type=main" class="btn btn-outline-secondary d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i>
         <span>Volver a Estadísticas</span>
     </a>
@@ -10,7 +10,7 @@
     <div class="col-lg-12">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body p-5">
-                <form action="index.php?route=generacionReportes" method="POST">
+                <form action="index.php?url=Reporte&type=generate" method="POST">
                     <h5 class="fw-bold mb-4 text-primary border-bottom pb-2">Seleccione Criterios</h5>
 
                     <div class="mb-4">

@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Laboratorios\Models;
 
-use App\config\database\DbConnect;
+use App\Laboratorios\Config\Connect\ConnectDB;
 use PDO;
 
-class ReportesModel extends DbConnect {
+class ReportesModel extends ConnectDB {
     public function getUsoLaboratorios() {
-        $this->connect();
+        $conex = $this->getConnection();
         $sql = "SELECT l.idLaboratorio, l.nomLaboratorio,
                        COUNT(r.idReserva) AS total_reservas
                 FROM tbllaboratorio l
                 LEFT JOIN tblreserva r ON l.idLaboratorio = r.idLaboratorio
                 GROUP BY l.idLaboratorio, l.nomLaboratorio
                 ORDER BY total_reservas DESC";
-        $stmt = $this->con->prepare($sql);
+        $stmt = $conex->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -44,70 +44,117 @@ class ReportesModel extends DbConnect {
     }
 
     public function getReporte($tipo, $fechaInicio = '', $fechaFin = '', $filtroCampo = '', $filtroValor = '') {
-        $this->connect();
+        $conex = $this->getConnection();
         $params = [];
 
         switch ($tipo) {
             case 'ocupacion':
-                $sql = "SELECT r.idReserva, r.nombreReserva, r.fechaReserva,
+                $sql = "SELECT r.idReserva, r.nombreReserva AS practica, r.fechaReserva,
                                r.horaInicioReserva, r.horaFinReserva, r.estadoReserva,
-                               l.nomLaboratorio
+                               l.nomLaboratorio AS laboratorio
                         FROM tblreserva r
                         JOIN tbllaboratorio l ON r.idLaboratorio = l.idLaboratorio
                         WHERE 1=1";
                 if ($fechaInicio) { $sql .= " AND r.fechaReserva >= :fi"; $params[':fi'] = $fechaInicio; }
-                if ($fechaFin) { $sql .= " AND r.fechaReserva <= :ff"; $params[':ff'] = $fechaFin; }
+                if ($fechaFin)    { $sql .= " AND r.fechaReserva <= :ff"; $params[':ff'] = $fechaFin; }
+                if ($filtroCampo === 'Laboratorio' && $filtroValor) {
+                    $sql .= " AND l.nomLaboratorio LIKE :fv"; $params[':fv'] = "%$filtroValor%";
+                }
                 $sql .= " ORDER BY r.fechaReserva DESC LIMIT 50";
                 break;
 
             case 'insumos':
-                return $this->getAllInsumos();
+                $sql = "SELECT i.nomInsumos AS insumo, i.cantidadDispInsumos AS disponible,
+                               i.cantidadMinInsumos AS minimo, i.unidadMedidaInsumos AS unidad,
+                               i.categoriaInsumos AS categoria
+                        FROM tblinsumos i
+                        WHERE 1=1";
+                if ($filtroCampo === 'Laboratorio' && $filtroValor) {
+                    $sql .= " AND i.categoriaInsumos LIKE :fv"; $params[':fv'] = "%$filtroValor%";
+                }
+                $sql .= " ORDER BY i.nomInsumos LIMIT 50";
                 break;
 
             case 'docente':
-                $sql = "SELECT r.idReserva, r.nombreReserva, r.fechaReserva,
+                $sql = "SELECT r.nombreReserva AS practica, r.fechaReserva,
                                r.horaInicioReserva, r.horaFinReserva, r.estadoReserva,
-                               l.nomLaboratorio
+                               l.nomLaboratorio AS laboratorio,
+                               (SELECT CONCAT(nomDocente, ' ', apellidoDocente)
+                                FROM tbldocente
+                                WHERE idSolicitudPractica = r.idSolicitudPractica
+                                LIMIT 1) AS docente
                         FROM tblreserva r
                         JOIN tbllaboratorio l ON r.idLaboratorio = l.idLaboratorio
                         WHERE 1=1";
                 if ($fechaInicio) { $sql .= " AND r.fechaReserva >= :fi"; $params[':fi'] = $fechaInicio; }
-                if ($fechaFin) { $sql .= " AND r.fechaReserva <= :ff"; $params[':ff'] = $fechaFin; }
+                if ($fechaFin)    { $sql .= " AND r.fechaReserva <= :ff"; $params[':ff'] = $fechaFin; }
+                if ($filtroCampo === 'Docente' && $filtroValor) {
+                    $sql .= " AND EXISTS (SELECT 1 FROM tbldocente d WHERE d.idSolicitudPractica = r.idSolicitudPractica
+                              AND CONCAT(d.nomDocente, ' ', d.apellidoDocente) LIKE :fv)";
+                    $params[':fv'] = "%$filtroValor%";
+                }
                 $sql .= " ORDER BY r.fechaReserva DESC LIMIT 50";
                 break;
 
             case 'mantenimiento':
-                $sql = "SELECT a.idAnomalia, a.descripAnomalia, a.fechaDecteAnomalia,
-                               a.estadoAnomalia, a.tipoAnomalia
+                $sql = "SELECT a.idAnomalia AS codigo, a.tipoAnomalia AS tipo,
+                               a.descripAnomalia AS descripcion, a.fechaDecteAnomalia AS fecha,
+                               a.estadoAnomalia AS estado,
+                               l.nomLaboratorio AS laboratorio
                         FROM tblanomalia a
+                        LEFT JOIN tbllaboratorio l ON a.idLaboratorio = l.idLaboratorio
                         WHERE 1=1";
                 if ($fechaInicio) { $sql .= " AND a.fechaDecteAnomalia >= :fi"; $params[':fi'] = $fechaInicio; }
-                if ($fechaFin) { $sql .= " AND a.fechaDecteAnomalia <= :ff"; $params[':ff'] = $fechaFin; }
+                if ($fechaFin)    { $sql .= " AND a.fechaDecteAnomalia <= :ff"; $params[':ff'] = $fechaFin; }
+                if ($filtroCampo === 'Laboratorio' && $filtroValor) {
+                    $sql .= " AND l.nomLaboratorio LIKE :fv"; $params[':fv'] = "%$filtroValor%";
+                }
                 $sql .= " ORDER BY a.fechaDecteAnomalia DESC LIMIT 50";
                 break;
 
             case 'conflictos':
-                $sql = "SELECT r.idReserva, r.nombreReserva, r.fechaReserva,
-                               r.horaInicioReserva, r.horaFinReserva, l.nomLaboratorio,
-                               r.estadoReserva
-                        FROM tblreserva r
-                        JOIN tbllaboratorio l ON r.idLaboratorio = l.idLaboratorio
-                        WHERE r.estadoReserva = 'conflicto'";
-                if ($fechaInicio) { $sql .= " AND r.fechaReserva >= :fi"; $params[':fi'] = $fechaInicio; }
-                if ($fechaFin) { $sql .= " AND r.fechaReserva <= :ff"; $params[':ff'] = $fechaFin; }
-                $sql .= " ORDER BY r.fechaReserva DESC LIMIT 50";
+                $sql = "SELECT r1.nombreReserva AS practica, r1.fechaReserva,
+                               r1.horaInicioReserva, r1.horaFinReserva,
+                               l.nomLaboratorio AS laboratorio,
+                               CONCAT(r1.horaInicioReserva, '-', r1.horaFinReserva) AS conflicto_con
+                        FROM tblreserva r1
+                        JOIN tbllaboratorio l ON r1.idLaboratorio = l.idLaboratorio
+                        JOIN tblreserva r2 ON r1.idLaboratorio = r2.idLaboratorio
+                            AND r1.fechaReserva = r2.fechaReserva
+                            AND r1.idReserva < r2.idReserva
+                            AND r1.horaInicioReserva < r2.horaFinReserva
+                            AND r1.horaFinReserva > r2.horaInicioReserva
+                        WHERE 1=1";
+                if ($fechaInicio) { $sql .= " AND r1.fechaReserva >= :fi"; $params[':fi'] = $fechaInicio; }
+                if ($fechaFin)    { $sql .= " AND r1.fechaReserva <= :ff"; $params[':ff'] = $fechaFin; }
+                $sql .= " ORDER BY r1.fechaReserva, r1.horaInicioReserva LIMIT 50";
                 break;
 
             default:
                 return [];
         }
 
-        $stmt = $this->con->prepare($sql);
+        $stmt = $conex->prepare($sql);
         foreach ($params as $key => $val) {
             $stmt->bindValue($key, $val);
         }
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Convert all time columns to 12h format
+        $timeColumns = ['horaInicioReserva', 'horaFinReserva', 'horaInicioSolicitudPractica', 'horaFinSolicitudPractica'];
+        foreach ($rows as &$row) {
+            foreach ($timeColumns as $col) {
+                if (isset($row[$col]) && $row[$col]) {
+                    $ts = strtotime($row[$col]);
+                    if ($ts !== false) {
+                        $row[$col] = date('h:i A', $ts);
+                    }
+                }
+            }
+        }
+
+        return $rows;
     }
 
     private function getAllInsumos() {

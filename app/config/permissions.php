@@ -2,24 +2,18 @@
 return [
     'Administrador' => [
         'home', 'perfil',
-        'gestionUsuarios', 'crearUsuario', 'editarUsuario', 'eliminarUsuario',
-        'solicitudes', 'nuevaSolicitud', 'historialSolicitudes',
-        'laboratorios', 'mantenimientoLabs', 'protocolosLabs',
-        'inventarioGeneral', 'nuevoInsumo', 'editarInsumo', 'movimientosInsumos', 'alertasStock',
-        'horarios',
-        'reportes', 'generacionReportes',
-        'permisosUsuarios',
-    ],
-    'Auxiliar' => [
-        'home', 'perfil',
-        'inventarioGeneral', 'nuevoInsumo', 'editarInsumo', 'movimientosInsumos', 'alertasStock',
-        'mantenimientoLabs', 'laboratorios',
+        'usuario',
+        'solicitud',
+        'laboratorio', 'mantenimiento', 'reserva',
+        'insumo',
+        'reporte',
         'horarios',
     ],
-    'Docente' => [
+    'Tecnico' => [
         'home', 'perfil',
-        'solicitudes', 'nuevaSolicitud', 'historialSolicitudes',
-        'laboratorios', 'protocolosLabs',
-        'horarios', 'reportes',
+        'insumo',
+        'mantenimiento', 'laboratorio',
+        'horarios',
+        'solicitud', 'reserva',
     ],
 ];

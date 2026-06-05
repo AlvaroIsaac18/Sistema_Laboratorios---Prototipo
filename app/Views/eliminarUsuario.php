@@ -3,7 +3,7 @@
         <h2 class="h4 mb-1">Desactivar Usuario</h2>
         <p class="text-muted small mb-0">Confirmaci&oacute;n para desactivar un usuario del sistema</p>
     </div>
-    <a href="index.php?route=gestionUsuarios" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+    <a href="index.php?url=Usuario&type=list" class="btn btn-outline-secondary d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i>
         <span>Volver a Usuarios</span>
     </a>
@@ -36,8 +36,8 @@
         </p>
 
         <div class="d-flex justify-content-center gap-3 mt-4 pt-3 border-top">
-            <a href="index.php?route=gestionUsuarios" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
-            <form action="index.php?route=eliminarUsuario" method="POST">
+            <a href="index.php?url=Usuario&type=list" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
+            <form action="index.php?url=Usuario&type=delete" method="POST">
                 <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
                 <input type="hidden" name="rol" value="<?= htmlspecialchars($usuario['rol']) ?>">
                 <button type="submit" class="btn btn-danger px-5 py-2 fw-semibold shadow-sm">

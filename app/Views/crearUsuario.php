@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="h4 mb-1">Registrar Nuevo Usuario</h2>
-        <p class="text-muted small mb-0">Ingrese los datos del nuevo docente, auxiliar o administrador</p>
+        <p class="text-muted small mb-0">Ingrese los datos del nuevo docente, técnico o administrador</p>
     </div>
-    <a href="index.php?route=gestionUsuarios" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+    <a href="index.php?url=Usuario&type=list" class="btn btn-outline-secondary d-flex align-items-center gap-2">
         <i class="bi bi-arrow-left"></i>
         <span>Volver a Usuarios</span>
     </a>
@@ -33,7 +33,7 @@
 
 <div class="card border-0 shadow-sm">
     <div class="card-body p-4 p-md-5">
-        <form action="index.php?route=crearUsuario" method="POST">
+        <form action="index.php?url=Usuario&type=register" method="POST">
             <h5 class="fw-bold mb-4 text-primary border-bottom pb-2">Datos del Usuario</h5>
             <div class="row g-4 mb-5">
                 <div class="col-md-4">
@@ -41,7 +41,7 @@
                     <select name="rol" class="form-select form-select-lg bg-light" required>
                         <option value="">Seleccione...</option>
                         <option value="Docente">Docente</option>
-                        <option value="Auxiliar">Auxiliar</option>
+                        <option value="Tecnico">Técnico</option>
                         <option value="Administrador">Administrador</option>
                     </select>
                     <div class="form-text small">Seleccione el tipo de usuario a registrar.</div>
@@ -67,7 +67,7 @@
                 <div class="col-md-6">
                     <label class="form-label fw-semibold text-secondary">Direcci&oacute;n / Departamento</label>
                     <input type="text" name="direccion" class="form-control form-control-lg bg-light" placeholder="Ej. Laboratorio de Inform&aacute;tica">
-                    <div class="form-text small">Solo para Auxiliar (direcci&oacute;n del t&eacute;cnico).</div>
+                    <div class="form-text small">Solo para Técnico (dirección del técnico).</div>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold text-secondary">Cargo</label>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-3 pt-3 border-top">
-                <a href="index.php?route=gestionUsuarios" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
+                <a href="index.php?url=Usuario&type=list" class="btn btn-light px-4 py-2 fw-semibold">Cancelar</a>
                 <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold shadow-sm">
                     <i class="bi bi-save me-2"></i> Guardar Usuario
                 </button>

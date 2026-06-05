@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Models;
+namespace App\Laboratorios\Models;
 
-use App\config\database\DbConnect;
+use App\Laboratorios\Config\Connect\ConnectDB;
 use PDO;
 
-class LoginModel extends DbConnect {
+class LoginModel extends ConnectDB {
     public function login($cedula, $correo) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
 
-            $sql = "SELECT `idDocente` AS `id`, `cedulaDocente` AS `cedula`,
-                           CONCAT(`nomDocente`, ' ', `apellidoDocente`) AS `nombre_completo`,
-                           `correoInstitucionalDocente` AS `correo`, 'Docente' AS `rol`
-                    FROM `tbldocente`
-                    WHERE `cedulaDocente` = :cedula AND `correoInstitucionalDocente` = :correo AND `activo` = 1";
+            
+            $sql = "SELECT `idTecnico` AS `id`, `cedulaTecnico` AS `cedula`,
+                           `nomTecnico` AS `nombre_completo`,
+                           `correoInstitucionalTecnico` AS `correo`, 'Tecnico' AS `rol`
+                    FROM `tbltecnico`
+                    WHERE `cedulaTecnico` = :cedula AND `correoInstitucionalTecnico` = :correo AND `activo` = 1";
 
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindParam(':cedula', $cedula);
             $stmt->bindParam(':correo', $correo);
             $stmt->execute();
@@ -29,7 +30,7 @@ class LoginModel extends DbConnect {
                     FROM `tblpersonaldireccion`
                     WHERE `cedulaPersonalDireccion` = :cedula AND `correoInstitucionalPersonalDireccion` = :correo AND `activo` = 1";
 
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindParam(':cedula', $cedula);
             $stmt->bindParam(':correo', $correo);
             $stmt->execute();

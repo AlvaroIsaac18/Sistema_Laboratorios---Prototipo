@@ -1,160 +1,191 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="h4">Cronograma de Laboratorios - Ciencias Naturales</h2>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-primary active">Semanal</button>
-                        <button class="btn btn-outline-primary">Mensual</button>
-                    </div>
-                </div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 mb-0">Cronograma Semanal</h2>
+</div>
 
-                <div class="card border-0 shadow-sm overflow-hidden text-center mb-4">
-                    <div class="table-responsive">
-                        <table class="table table-bordered mb-0 align-middle">
-                            <thead class="table-primary text-white border-primary">
-                                <tr>
-                                    <th style="width: 100px;">Hora</th>
-                                    <th>Lunes</th>
-                                    <th>Martes</th>
-                                    <th>Miércoles</th>
-                                    <th>Jueves</th>
-                                    <th>Viernes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="fw-bold bg-light text-primary">08:00am<br>10:00am</td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-primary bg-opacity-10 text-primary border border-primary rounded-3 shadow-sm mb-1">
-                                            <span class="small d-block fw-bold border-bottom mb-1">P. Químicos - Sec.
-                                                2101</span>
-                                            <span class="small d-block"><i class="bi bi-person me-1"></i>Prof. Ricardo
-                                                Silva</span>
-                                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i>Lab. Química
-                                                A-01</span>
-                                            <span class="small d-block"><i class="bi bi-people me-1"></i>25
-                                                Estudiantes</span>
-                                            <span class="badge bg-primary mt-2">Ocupado</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-success bg-opacity-10 text-success border border-success rounded-3 shadow-sm">
-                                            <span class="small d-block fw-bold border-bottom mb-1">Control Amb. - Sec.
-                                                1205</span>
-                                            <span class="small d-block"><i class="bi bi-person me-1"></i>Dra. Elena
-                                                Ramos</span>
-                                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i>Lab. Biología
-                                                B-02</span>
-                                            <span class="small d-block"><i class="bi bi-people me-1"></i>18
-                                                Estudiantes</span>
-                                            <span class="badge bg-success mt-2">Libre</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-primary bg-opacity-10 text-primary border border-primary rounded-3 shadow-sm">
-                                            <span class="small d-block fw-bold border-bottom mb-1">Anatomía I - Sec.
-                                                3201</span>
-                                            <span class="small d-block"><i class="bi bi-person me-1"></i>Prof. Marcos
-                                                Sol</span>
-                                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i>Lab. Anatomía
-                                                C-01</span>
-                                            <span class="small d-block"><i class="bi bi-people me-1"></i>30
-                                                Estudiantes</span>
-                                            <span class="badge bg-primary mt-2">Aprobada</span>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-dark bg-opacity-10 text-dark border border-dark rounded-3 shadow-sm">
-                                            <span class="small d-block fw-bold border-bottom mb-1">Higiene - Sec.
-                                                1102</span>
-                                            <span class="small d-block"><i class="bi bi-person me-1"></i>Prof. Ana
-                                                López</span>
-                                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i>Lab. Seguridad
-                                                S-01</span>
-                                            <span class="small d-block"><i class="bi bi-people me-1"></i>22
-                                                Estudiantes</span>
-                                            <span class="badge bg-dark mt-2">Práctica</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold bg-light text-primary">10:00am<br>12:00pm</td>
-                                    <td></td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-danger bg-opacity-10 text-danger border border-danger rounded-3 shadow-sm">
-                                            <span
-                                                class="small d-block fw-bold text-dark border-bottom border-danger mb-1"><i
-                                                    class="bi bi-exclamation-triangle-fill me-1"></i>CHOQUE
-                                                DETECTADO</span>
-                                            <span class="small d-block"><strong>Motivo:</strong> Doble asignación Lab
-                                                B-02</span>
-                                            <span class="small d-block">Prof. Pérez vs Prof. Gómez</span>
-                                            <span class="badge bg-danger mt-2">Acción Requerida</span>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-primary bg-opacity-10 text-primary border border-primary rounded-3 shadow-sm">
-                                            <span class="small d-block fw-bold border-bottom mb-1">Deporte - Sec.
-                                                4101</span>
-                                            <span class="small d-block"><i class="bi bi-person me-1"></i>Prof. Carlos
-                                                Mena</span>
-                                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i>Lab.
-                                                Biomecánica D-02</span>
-                                            <span class="small d-block"><i class="bi bi-people me-1"></i>15
-                                                Estudiantes</span>
-                                            <span class="badge bg-warning text-dark mt-2">Por Confirmar</span>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold bg-light text-primary">01:00pm<br>03:00pm</td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-secondary bg-opacity-10 text-secondary border border-secondary rounded-3 border-dashed">
-                                            <span
-                                                class="small d-block fw-bold border-bottom border-secondary mb-1 text-uppercase">Mantenimiento</span>
-                                            <span class="small d-block">Limpieza profunda y calibración</span>
-                                            <span class="small d-block">Personal de Apoyo Técnico</span>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        <div
-                                            class="p-2 bg-success bg-opacity-10 text-success border border-success rounded-3 shadow-sm">
-                                            <span class="small d-block fw-bold border-bottom mb-1">P. Químicos - Sec.
-                                                2102</span>
-                                            <span class="small d-block"><i class="bi bi-person me-1"></i>Dra. Elena
-                                                Ramos</span>
-                                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i>Lab.
-                                                Inorgánica A-02</span>
-                                            <span class="badge bg-success mt-2">Libre</span>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold bg-light">15:00 - 17:00</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <div class="p-2 bg-info bg-opacity-10 text-info border border-info rounded-3">
-                                            <span class="small d-block fw-bold">Cont. Ambiental</span>
-                                            <span class="small d-block text-muted">Lab A-05</span>
-                                            <span class="badge bg-info mt-1">Práctica</span>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="?url=Laboratorio&type=horarios&semana=<?= $semanaAnterior ?>" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-chevron-left"></i> Semana Anterior
+    </a>
+    <span class="fw-semibold">
+        Semana del <?= date('d/m/Y', strtotime($lunesStr)) ?> al <?= date('d/m/Y', strtotime($domingoStr)) ?>
+    </span>
+    <div>
+        <a href="?url=Laboratorio&type=horarios" class="btn btn-outline-primary btn-sm me-1">
+            <i class="bi bi-calendar-week"></i> Esta Semana
+        </a>
+        <a href="?url=Laboratorio&type=horarios&semana=<?= $semanaSiguiente ?>" class="btn btn-outline-secondary btn-sm">
+            Semana Siguiente <i class="bi bi-chevron-right"></i>
+        </a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-body py-2">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold text-muted mb-1">Filtrar por Laboratorio</label>
+                <select id="filtroLaboratorio" class="form-select form-select-sm">
+                    <option value="">Todos los laboratorios</option>
+                    <?php foreach ($laboratorios as $lab): ?>
+                    <option value="<?= htmlspecialchars($lab['nomLaboratorio']) ?>"><?= htmlspecialchars($lab['nomLaboratorio']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-semibold text-muted mb-1">Filtrar por Estado</label>
+                <div class="btn-group btn-group-sm w-100" data-filter-group="estado">
+                    <button class="btn btn-outline-secondary filter-btn active" data-filter-value="all">Todas</button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter-value="activa">Ocupado</button>
+                    <button class="btn btn-outline-success filter-btn" data-filter-value="aprobada">Aprobada</button>
+                    <button class="btn btn-outline-warning filter-btn" data-filter-value="pendiente">Pendiente</button>
+                    <button class="btn btn-outline-secondary filter-btn" data-filter-value="finalizada">Finalizada</button>
+                    <button class="btn btn-outline-danger filter-btn" data-filter-value="cancelada">Cancelada</button>
                 </div>
+            </div>
+            <div class="col-md-2 d-flex justify-content-end">
+                <button id="limpiarFiltros" class="btn btn-sm btn-outline-secondary w-100">
+                    <i class="bi bi-x-circle me-1"></i>Limpiar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$franjas = [
+    ['label' => '08:00 AM<br>10:00 AM', 'inicio' => '08:00', 'fin' => '10:00'],
+    ['label' => '10:00 AM<br>12:00 PM', 'inicio' => '10:00', 'fin' => '12:00'],
+    ['label' => '01:00 PM<br>03:00 PM', 'inicio' => '13:00', 'fin' => '15:00'],
+    ['label' => '03:00 PM<br>05:00 PM', 'inicio' => '15:00', 'fin' => '17:00'],
+];
+
+$estadoBadge = [
+    'activa'     => ['bg-primary', 'primary', 'Ocupado'],
+    'pendiente'  => ['bg-warning', 'warning', 'Pendiente'],
+    'aprobada'   => ['bg-success', 'success', 'Aprobada'],
+    'finalizada' => ['bg-secondary', 'secondary', 'Finalizada'],
+    'cancelada'  => ['bg-danger', 'danger', 'Cancelada'],
+];
+
+function tiempoEnSlot(string $horaInicio, string $horaFin, string $slotInicio, string $slotFin): bool
+{
+    $inicio = strtotime($horaInicio);
+    $sIni   = strtotime($slotInicio);
+    $sFin   = strtotime($slotFin);
+    if ($inicio === false) return false;
+    return $inicio >= $sIni && $inicio < $sFin;
+}
+?>
+
+<div class="card border-0 shadow-sm overflow-hidden text-center mb-4">
+    <div class="table-responsive">
+        <table id="tablaCronograma" class="table table-bordered mb-0 align-middle">
+            <thead class="table-primary text-white border-primary">
+                <tr>
+                    <th style="width: 100px;">Hora</th>
+                    <?php foreach ($diasSemana as $dia): ?>
+                    <th><?= $dia ?><br><small><?= date('d/m', strtotime($fechasSemana[$dia])) ?></small></th>
+                    <?php endforeach; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($franjas as $franja): ?>
+                <tr>
+                    <td class="fw-bold bg-light text-primary"><?= $franja['label'] ?></td>
+                    <?php foreach ($diasSemana as $dia):
+                        $fechaDia = $fechasSemana[$dia];
+                        $reservasEnCelda = array_filter($reservas, function($r) use ($fechaDia, $franja) {
+                            return $r['fechaReserva'] === $fechaDia
+                                && tiempoEnSlot(
+                                    $r['horaInicioReserva'] ?? '',
+                                    $r['horaFinReserva'] ?? '',
+                                    $franja['inicio'],
+                                    $franja['fin']
+                                );
+                        });
+                    ?>
+                    <td>
+                        <span class="text-muted small placeholder-vacio" style="display:<?= empty($reservasEnCelda) ? '' : 'none' ?>">—</span>
+                        <?php foreach ($reservasEnCelda as $r):
+                            $estado = $r['estadoReserva'] ?? 'desconocido';
+                            $bg = $estadoBadge[$estado] ?? ['bg-secondary', 'secondary', ucfirst($estado)];
+                        ?>
+                        <a href="index.php?url=Reserva&type=edit&id=<?= $r['idReserva'] ?>" class="text-decoration-none">
+                        <div class="p-2 bg-<?= $bg[1] ?> bg-opacity-10 text-<?= $bg[1] ?> border border-<?= $bg[1] ?> rounded-3 shadow-sm mb-1 cronograma-card"
+                             data-laboratorio="<?= htmlspecialchars($r['nomLaboratorio'] ?? '') ?>"
+                             data-estado="<?= $estado ?>">
+                            <span class="small d-block fw-bold border-bottom border-<?= $bg[1] ?> mb-1"><?= htmlspecialchars($r['nombreReserva'] ?? 'Sin nombre') ?></span>
+                            <span class="small d-block"><i class="bi bi-person me-1"></i><?= htmlspecialchars($r['nombreDocente'] ?? '—') ?></span>
+                            <span class="small d-block"><i class="bi bi-geo-alt me-1"></i><?= htmlspecialchars($r['nomLaboratorio'] ?? '—') ?></span>
+                            <span class="badge <?= $bg[0] ?> mt-1"><?= $bg[2] ?></span>
+                        </div>
+                        </a>
+                        <?php endforeach; ?>
+                    </td>
+                    <?php endforeach; ?>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center">
+    <div class="small text-muted">
+        <i class="bi bi-info-circle me-1"></i>
+        Mostrando <span id="conteoReservas"><?= count($reservas) ?></span> reserva(s) en la semana
+    </div>
+
+</div>
+
+<script>
+(function() {
+    const filtroLab = document.getElementById('filtroLaboratorio');
+    const estadoBtns = document.querySelectorAll('[data-filter-group="estado"] .filter-btn');
+    const limpiarBtn = document.getElementById('limpiarFiltros');
+    const cards = document.querySelectorAll('#tablaCronograma .cronograma-card');
+    const conteo = document.getElementById('conteoReservas');
+
+    function applyFilters() {
+        const labSel = filtroLab.value;
+        const estSel = document.querySelector('[data-filter-group="estado"] .filter-btn.active');
+        const estVal = estSel ? estSel.dataset.filterValue : 'all';
+
+        let visible = 0;
+        cards.forEach(function(card) {
+            const coincideLab = labSel === '' || card.dataset.laboratorio === labSel;
+            const coincideEst = estVal === 'all' || card.dataset.estado === estVal;
+            card.style.display = coincideLab && coincideEst ? '' : 'none';
+            if (coincideLab && coincideEst) visible++;
+        });
+
+        const celdas = document.querySelectorAll('#tablaCronograma tbody td');
+        celdas.forEach(function(td) {
+            const hijosVisibles = Array.from(td.querySelectorAll('.cronograma-card')).filter(function(c) {
+                return c.style.display !== 'none';
+            });
+            const ph = td.querySelector('.placeholder-vacio');
+            if (ph) ph.style.display = hijosVisibles.length === 0 ? '' : 'none';
+        });
+
+        conteo.textContent = visible;
+    }
+
+    filtroLab.addEventListener('change', applyFilters);
+
+    estadoBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            estadoBtns.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            applyFilters();
+        });
+    });
+
+    limpiarBtn.addEventListener('click', function() {
+        filtroLab.value = '';
+        estadoBtns.forEach(function(b) { b.classList.remove('active'); });
+        document.querySelector('[data-filter-group="estado"] .filter-btn[data-filter-value="all"]')?.classList.add('active');
+        applyFilters();
+    });
+})();
+</script>

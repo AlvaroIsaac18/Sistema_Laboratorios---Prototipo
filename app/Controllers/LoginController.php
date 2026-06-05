@@ -1,8 +1,8 @@
 <?php
-namespace App\Controllers;
+namespace App\Laboratorios\Controllers;
 
 require_once 'app/Models/LoginModel.php';
-use App\Models\LoginModel;
+use App\Laboratorios\Models\LoginModel;
 
 $error = '';
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_cedula'] = $user['cedula'];
             $_SESSION['user_correo'] = $user['correo'];
             $_SESSION['user_rol'] = $user['rol'];
-            header('Location: index.php?route=home');
+            header('Location: index.php?url=Home');
             exit;
         } else {
             $error = 'Cédula y/o correo institucional no coinciden con nuestros registros.';

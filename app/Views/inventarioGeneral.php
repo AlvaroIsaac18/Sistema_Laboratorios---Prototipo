@@ -3,7 +3,7 @@
         <h2 class="h4 mb-0">Inventario General de Laboratorios</h2>
         <p class="text-muted small">Catálogo de materiales, equipos y reactivos disponibles para prácticas académicas</p>
     </div>
-    <a href="index.php?route=nuevoInsumo" class="btn btn-primary shadow-sm"><i class="bi bi-plus-lg me-2"></i>Registrar Insumo</a>
+    <a href="index.php?url=Insumo&type=register" class="btn btn-primary shadow-sm"><i class="bi bi-plus-lg me-2"></i>Registrar Insumo</a>
 </div>
 
 <?php if ($successMessage): ?>
@@ -31,7 +31,7 @@
                 <tr>
                     <td colspan="6" class="text-center text-muted py-4">
                         <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-                        No hay insumos registrados. <a href="index.php?route=nuevoInsumo">Registrar el primero</a>
+                        No hay insumos registrados. <a href="index.php?url=Insumo&type=register">Registrar el primero</a>
                     </td>
                 </tr>
                 <?php else: ?>
@@ -58,8 +58,8 @@
                     </td>
                     <td class="text-muted"><?= htmlspecialchars($insumo['unidadMedidaInsumos'] ?? '—') ?></td>
                     <td class="text-end">
-                        <a href="index.php?route=editarInsumo&id=<?= $insumo['idInsumos'] ?>" class="btn btn-sm btn-light border"><i class="bi bi-pencil"></i></a>
-                        <a href="index.php?route=inventarioGeneral&action=delete&id=<?= $insumo['idInsumos'] ?>" class="btn btn-sm btn-light border text-danger" onclick="return confirm('¿Eliminar este insumo?')"><i class="bi bi-trash"></i></a>
+                        <a href="index.php?url=Insumo&type=edit&id=<?= $insumo['idInsumos'] ?>" class="btn btn-sm btn-light border"><i class="bi bi-pencil"></i></a>
+                        <a href="index.php?url=Insumo&type=list&action=delete&id=<?= $insumo['idInsumos'] ?>" class="btn btn-sm btn-light border text-danger" onclick="return confirm('¿Eliminar este insumo?')"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

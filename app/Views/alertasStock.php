@@ -1,62 +1,65 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="h4 mb-0 text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Centro de Alertas de Insumos</h2>
-        <p class="text-muted small mt-1">Monitoreo de material crítico para el desarrollo de prácticas de laboratorio</p>
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h3 mb-0 text-gray-800">Alertas de Stock</h1>
+        <p class="text-muted">Insumos que han alcanzado o superado el nivel mínimo de inventario configurado.</p>
     </div>
 </div>
 
-<?php if (empty($agotados) && empty($stockBajo) && empty($proximoVencer)): ?>
-<div class="card border-0 shadow-sm bg-success bg-opacity-10 border-top border-4 border-success">
-    <div class="card-body p-5 text-center">
-        <i class="bi bi-check-circle fs-1 text-success d-block mb-3"></i>
-        <h4 class="fw-bold text-success">Todo en orden</h4>
-        <p class="text-muted mb-0">No hay insumos agotados, con stock bajo ni próximos a vencer.</p>
+<div class="card shadow mb-4 border-start border-danger border-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-white">
+        <h6 class="m-0 fw-bold text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Insumos en Estado Crítico</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Insumo</th>
+                        <th>Categoría</th>
+                        <th class="text-center">Stock Disponible</th>
+                        <th class="text-center">Stock Mínimo</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($insumosCriticos)): ?>
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-check-circle fs-1 d-block mb-2 text-success"></i>
+                                Todos los insumos se encuentran por encima del nivel crítico.
+                            </td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($insumosCriticos as $insumo): ?>
+                            <?php 
+                                $disp = (float)$insumo['cantidadDispInsumos'];
+                                $min = (float)$insumo['cantidadMinInsumos'];
+                                $isAgotado = $disp <= 0;
+                            ?>
+                            <tr class="<?php echo $isAgotado ? 'table-danger-subtle' : ''; ?>">
+                                <td>
+                                    <div class="fw-bold"><?php echo htmlspecialchars($insumo['nomInsumos']); ?></div>
+                                    <small class="text-muted text-uppercase"><?php echo htmlspecialchars($insumo['unidadMedidaInsumos']); ?></small>
+                                </td>
+                                <td><?php echo htmlspecialchars($insumo['categoriaInsumos']); ?></td>
+                                <td class="text-center fw-bold <?php echo $isAgotado ? 'text-danger' : 'text-warning'; ?>"><?php echo $disp; ?></td>
+                                <td class="text-center"><?php echo $min; ?></td>
+                                <td>
+                                    <span class="badge <?php echo $isAgotado ? 'bg-danger' : 'bg-warning text-dark'; ?>">
+                                        <?php echo $isAgotado ? 'AGOTADO' : 'BAJO STOCK'; ?>
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <a href="index.php?url=Insumo" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-box-arrow-in-right"></i> Ver Inventario
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<?php else: ?>
-
-<div class="row g-4 mt-2">
-    <?php foreach ($agotados as $insumo): ?>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm h-100 border-top border-4 border-danger bg-danger bg-opacity-10">
-            <div class="card-body p-4 text-center">
-                <i class="bi bi-slash-circle fs-1 text-danger d-block mb-3"></i>
-                <h5 class="fw-bold text-dark"><?= htmlspecialchars($insumo['nomInsumos']) ?></h5>
-                <p class="text-danger fw-semibold mb-1">¡Agotado Completamente!</p>
-                <p class="small text-muted mb-4">Stock disponible: 0 <?= htmlspecialchars($insumo['unidadMedidaInsumos'] ?? '') ?></p>
-                <a href="index.php?route=nuevoInsumo" class="btn btn-sm btn-danger w-100 fw-bold">Registrar Nuevo Insumo</a>
-            </div>
-        </div>
-    </div>
-    <?php endforeach; ?>
-
-    <?php foreach ($stockBajo as $insumo): ?>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm h-100 border-top border-4 border-warning bg-warning bg-opacity-10">
-            <div class="card-body p-4 text-center">
-                <i class="bi bi-arrow-down-square fs-1 text-warning d-block mb-3"></i>
-                <h5 class="fw-bold text-dark"><?= htmlspecialchars($insumo['nomInsumos']) ?></h5>
-                <p class="fw-bold mb-1">Solo quedan <?= htmlspecialchars($insumo['cantidadDispInsumos']) ?> <?= htmlspecialchars($insumo['unidadMedidaInsumos'] ?? '') ?></p>
-                <p class="small text-muted mb-4">Stock mínimo recomendado: <?= htmlspecialchars($insumo['cantidadMinInsumos']) ?> <?= htmlspecialchars($insumo['unidadMedidaInsumos'] ?? '') ?></p>
-                <a href="index.php?route=inventarioGeneral" class="btn btn-sm btn-outline-dark border-warning w-100 fw-bold">Ver Inventario</a>
-            </div>
-        </div>
-    </div>
-    <?php endforeach; ?>
-
-    <?php foreach ($proximoVencer as $insumo): ?>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm h-100 border-top border-4 border-secondary bg-light">
-            <div class="card-body p-4 text-center">
-                <i class="bi bi-clock-history fs-1 text-secondary d-block mb-3"></i>
-                <h5 class="fw-bold text-dark"><?= htmlspecialchars($insumo['nomInsumos']) ?></h5>
-                <p class="text-secondary fw-semibold mb-1">Vence en <?= $insumo['diasRestantes'] ?> día<?= $insumo['diasRestantes'] !== 1 ? 's' : '' ?></p>
-                <p class="small text-muted mb-4">Fecha de vencimiento: <?= htmlspecialchars($insumo['fechaVence']) ?>. Se debe priorizar su uso o desechar según protocolo.</p>
-                <a href="index.php?route=inventarioGeneral" class="btn btn-sm btn-secondary w-100 fw-bold border-0">Revisar Inventario</a>
-            </div>
-        </div>
-    </div>
-    <?php endforeach; ?>
-</div>
-
-<?php endif; ?>

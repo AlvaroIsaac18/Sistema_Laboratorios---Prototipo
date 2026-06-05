@@ -3,11 +3,20 @@
         <h2 class="h4 mb-1">Mantenimiento de Laboratorios</h2>
         <p class="text-muted small mb-0">Gestión de reparaciones, limpieza y calibración de equipos</p>
     </div>
-    <button class="btn btn-primary d-flex align-items-center gap-2">
-        <i class="bi bi-plus-lg"></i>
-        <span>Programar Mantenimiento</span>
-    </button>
+    <?php if ($idLab): ?>
+    <a href="?url=Mantenimiento&type=list" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i>Ver Todos
+    </a>
+    <?php endif; ?>
 </div>
+
+<?php if ($idLab): ?>
+<div class="alert alert-info d-flex align-items-center gap-2 py-2" role="alert">
+    <i class="bi bi-funnel"></i>
+    <span>Mostrando mantenimientos del laboratorio seleccionado.</span>
+    <a href="?url=Laboratorio&type=detail&id=<?= $idLab ?>" class="alert-link ms-auto">Ver detalle del laboratorio</a>
+</div>
+<?php endif; ?>
 
 <?php if ($success): ?>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -17,8 +26,14 @@
 <?php endif; ?>
 
                 <div class="card border-0 shadow-sm mb-4">
-    <div class="card-header bg-white py-3 border-0">
+    <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
         <h5 class="card-title fw-bold mb-0">Órdenes de Mantenimiento Activas</h5>
+        <div class="btn-group" data-filter-group="estado">
+            <button class="btn btn-outline-secondary btn-sm filter-btn active" data-filter-group="estado" data-filter-value="all">Todas</button>
+            <button class="btn btn-outline-warning btn-sm filter-btn" data-filter-group="estado" data-filter-value="pendiente">Pendientes</button>
+            <button class="btn btn-outline-info btn-sm filter-btn" data-filter-group="estado" data-filter-value="en_progreso">En Progreso</button>
+            <button class="btn btn-outline-success btn-sm filter-btn" data-filter-group="estado" data-filter-value="resuelto">Resueltas</button>
+        </div>
     </div>
     <div class="table-responsive px-3 pb-3">
         <table class="table table-hover align-middle mb-0">
@@ -35,7 +50,7 @@
             </thead>
             <tbody>
             <?php if (empty($anomalias)): ?>
-                <tr>
+                <tr data-filter-empty="true">
                     <td colspan="7" class="text-center text-muted py-4">No hay órdenes de mantenimiento registradas.</td>
                 </tr>
             <?php else: ?>
@@ -48,7 +63,7 @@
                     default => ['bg-secondary', 'secondary', 'bi-question-circle', $estadoAnom]
                 };
             ?>
-                <tr>
+                <tr data-estado="<?= $estadoAnom ?>">
                     <td class="text-muted fw-bold">#A-<?= str_pad($a['idAnomalia'], 3, '0', STR_PAD_LEFT) ?></td>
                     <td><span class="badge bg-light text-dark border"><i class="bi bi-geo-alt me-1"></i><?= htmlspecialchars($a['nomLaboratorio'] ?? '—') ?></span></td>
                     <td><span class="d-block fw-semibold text-dark"><?= htmlspecialchars(ucfirst($a['tipoAnomalia'] ?? $a['descripAnomalia'])) ?></span></td>
@@ -78,7 +93,7 @@
                 <h5 class="card-title fw-bold mb-0">Solicitar Asistencia Técnica Rápida</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="index.php?route=mantenimientoLabs">
+                <form method="POST" action="index.php?url=Mantenimiento&type=list">
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-secondary">Afectación en:</label>
                         <select name="tipoAnomalia" class="form-select bg-light" required>
@@ -106,7 +121,7 @@
                 </div>
                 <h4 class="text-dark fw-bold"><?= $totalMantenimientos ?> Mantenimientos Realizados</h4>
                 <p class="text-muted small">Durante el presente semestre, el tiempo promedio de respuesta es de 48 horas tras reportarse la falla.</p>
-                <a href="index.php?route=generacionReportes" class="btn btn-outline-secondary mt-3 align-self-center"><i class="bi bi-file-earmark-text me-2"></i>Ver Reporte Completo de Reparaciones</a>
+                <a href="index.php?url=Reporte&type=generate&tipo=mantenimiento" class="btn btn-outline-secondary mt-3 align-self-center"><i class="bi bi-file-earmark-text me-2"></i>Ver Reporte Completo de Reparaciones</a>
             </div>
         </div>
     </div>

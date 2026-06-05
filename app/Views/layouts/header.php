@@ -7,5 +7,6 @@
     <link href="asset/css/bootstrap.min.css" rel="stylesheet">
     <link href="asset/css/bootstrap-icons.min.css" rel="stylesheet">
     <link href="asset/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="asset/img/1.jpg">
 </head>
 <body>

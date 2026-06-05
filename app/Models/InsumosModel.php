@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Laboratorios\Models;
 
-use App\config\database\DbConnect;
+use App\Laboratorios\Config\Connect\ConnectDB;
 use PDO;
 
-class InsumosModel extends DbConnect {
+class InsumosModel extends ConnectDB {
     public function getAll() {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
             $sql = "SELECT * FROM `tblinsumos` ORDER BY `nomInsumos` ASC";
-            $response = $this->con->prepare($sql);
+            $response = $conex->prepare($sql);
             $response->execute();
             return $response->fetchAll(PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
@@ -20,9 +20,9 @@ class InsumosModel extends DbConnect {
 
     public function getById($id) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
             $sql = "SELECT * FROM `tblinsumos` WHERE `idInsumos` = :id";
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,12 +33,12 @@ class InsumosModel extends DbConnect {
 
     public function create($data) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
             $sql = "INSERT INTO `tblinsumos` 
                     (`nomInsumos`, `descripInsumos`, `categoriaInsumos`, `cantidadStock`, `cantidadDispInsumos`, `cantidadMinInsumos`, `unidadMedidaInsumos`) 
                     VALUES 
                     (:nombre, :descripcion, :categoria, :stock, :disponible, :stockMin, :unidad)";
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindValue(':nombre', $data['nomInsumos']);
             $stmt->bindValue(':descripcion', $data['descripInsumos'] ?? '');
             $stmt->bindValue(':categoria', $data['categoriaInsumos'] ?? '');
@@ -54,7 +54,7 @@ class InsumosModel extends DbConnect {
 
     public function update($id, $data) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
             $sql = "UPDATE `tblinsumos` SET 
                         `nomInsumos` = :nombre,
                         `descripInsumos` = :descripcion,
@@ -64,7 +64,7 @@ class InsumosModel extends DbConnect {
                         `cantidadMinInsumos` = :stockMin,
                         `unidadMedidaInsumos` = :unidad
                     WHERE `idInsumos` = :id";
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindValue(':nombre', $data['nomInsumos']);
             $stmt->bindValue(':descripcion', $data['descripInsumos'] ?? '');
             $stmt->bindValue(':categoria', $data['categoriaInsumos'] ?? '');
@@ -81,13 +81,27 @@ class InsumosModel extends DbConnect {
 
     public function delete($id) {
         try {
-            $this->connect();
+            $conex = $this->getConnection();
             $sql = "DELETE FROM `tblinsumos` WHERE `idInsumos` = :id";
-            $stmt = $this->con->prepare($sql);
+            $stmt = $conex->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (\PDOException $e) {
             die("Error en InsumosModel::delete: " . $e->getMessage());
+        }
+    }
+
+    public function getCriticalStock() {
+        try {
+            $conex = $this->getConnection();
+            $sql = "SELECT * FROM `tblinsumos` 
+                    WHERE `cantidadDispInsumos` <= `cantidadMinInsumos` 
+                    ORDER BY `cantidadDispInsumos` ASC";
+            $response = $conex->prepare($sql);
+            $response->execute();
+            return $response->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            die("Error en InsumosModel::getCriticalStock: " . $e->getMessage());
         }
     }
 }

@@ -4,13 +4,15 @@
             <button type="button" id="sidebarCollapse" class="btn btn-outline-dark me-4">
                 <i class="bi bi-list"></i>
             </button>
-            <form class="d-none d-md-flex" role="search">
+            <form class="d-none d-md-flex" role="search" action="index.php" method="GET">
+                <input type="hidden" name="url" value="Insumo">
+                <input type="hidden" name="type" value="list">
                 <div class="input-group" style="width: 350px;">
                     <span class="input-group-text bg-white border-end-0">
                         <i class="bi bi-search text-muted"></i>
                     </span>
-                    <input class="form-control border-start-0 ps-0" type="search"
-                        placeholder="Buscar prácticas, insumos..." aria-label="Search">
+                    <input class="form-control border-start-0 ps-0" type="search" name="q"
+                        placeholder="Buscar insumos..." aria-label="Search" value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
                 </div>
             </form>
             <div class="ms-auto d-flex align-items-center">
@@ -29,13 +31,13 @@
                         <span><?php echo htmlspecialchars($_SESSION['user_nombre'] ?? 'Direccion'); ?></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="index.php?route=perfil">Perfil</a></li>
+                        <li><a class="dropdown-item" href="index.php?url=Usuario&type=perfil">Perfil</a></li>
                         <li><a class="dropdown-item" href="#">Ajustes</a></li>
 
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item text-danger" href="index.php?route=logout">Salir</a></li>
+                        <li><a class="dropdown-item text-danger" href="index.php?url=Usuario&type=logout">Salir</a></li>
                     </ul>
                 </div>
             </div>
